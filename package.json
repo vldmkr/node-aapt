@@ -1,0 +1,22 @@
+{
+  "name": "node-aapt",
+  "version": "1.0.0",
+  "description": "Android Asset Packaging Tool for Node.js allows you to view .apk archives",
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/vldmkr/node-aapt.git"
+  },
+  "keywords": [
+    "aapt",
+    "apk",
+    "android",
+    "parser"
+  ],
+  "author": "Vladyslav Makarian",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/vldmkr/node-aapt/issues"
+  },
+  "homepage": "https://github.com/vldmkr/node-aapt#readme"
+}
