@@ -8,7 +8,7 @@ const fs     = require('fs');
 const aapt = path.join(__dirname, 'lib', os.type(), 'aapt');
 
 module.exports = function (filename, callback) {
-  fs.access(aapt, fs.X_OK, err => {
+  fs.access(aapt, fs.X_OK, (err) => {
     if(err) {
       err.msg = ['Hmmm, what OS are you using?', os.type()].join(' ');
       callback(err, null);
@@ -24,7 +24,7 @@ module.exports = function (filename, callback) {
             packageName : match[1],
             versionCode : match[2],
             versionName : match[3],
-          }
+          };
           callback(null, info);
         }
       });
