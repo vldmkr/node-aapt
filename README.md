@@ -35,7 +35,7 @@ In the console output you will see something like this:
 ### path
 Type: `String`
 
-Path to the your APK file.
+Path to your APK file.
 
 ### callback
 Type: `function (err, data)`
