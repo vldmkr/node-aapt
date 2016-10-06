@@ -11,13 +11,13 @@ module.exports = function (filename, callback) {
   fs.access(aapt, fs.X_OK, err => {
     if(err) {
       err.msg = ['Hmmm, what OS are you using?', os.type()].join(' ');
-      callback(null, err);
+      callback(err, null);
     } else {
       const cmd = [aapt, 'dump', 'badging', filename, '|', 'grep', 'package'].join(' ');
       exec(cmd, (err, stdout, stderr) => {
-        var error = err || stderr;
+        const error = err || stderr;
         if(error) {
-          callback(null, error);
+          callback(error, null);
         } else {
           const match = stdout.match(/name='([^']+)'[\s]*versionCode='(\d+)'[\s]*versionName='([^']+)/);
           const info = {
@@ -25,9 +25,9 @@ module.exports = function (filename, callback) {
             versionCode : match[2],
             versionName : match[3],
           }
-          callback(info, null);
+          callback(null, info);
         }
       });
     } 
   });
-}
+};
