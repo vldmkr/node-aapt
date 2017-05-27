@@ -9,7 +9,7 @@ npm install node-aapt --save
 ```
 
 ## Example
-
+Using a callback:
 ```js
 const packageInfo = require('node-aapt');
 
@@ -21,6 +21,21 @@ packageInfo('/path/to/your/ExampleApp.apk', (err, data) => {
   }
 });
 ```
+Using a promise:
+
+```js
+const packageInfo = require('node-aapt');
+
+packageInfo('/path/to/your/ExampleApp.apk')
+  .then (data => {
+    console.log(data)
+  })
+  .catch (err) {
+    // something went wrong 
+  }
+
+```
+
 In the console output you will see something like this:
 ```js
 { packageName: 'com.example.app',
