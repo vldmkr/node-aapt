@@ -8,16 +8,10 @@ const fs = require('fs');
 const aapt = path.join(__dirname, 'lib', os.type(), 'aapt');
 
 const keyValue = /(\w+[-\w+]*):'([^']*)'/
-const objValue = /(\w+)='([^'])*'/
 
 function findKeyValue(string) {
   //application-label-ur-PK:'Hello world'
-  return string.match(keyValue)
-}
-
-function findObjValue(string) {
-  //application-label-ur-PK='Hello world'
-  return string.match(objValue)
+  return string.match(keyValue);
 }
 
 module.exports = function (filename, callback) {
@@ -36,23 +30,23 @@ module.exports = function (filename, callback) {
             reject(error);
             callback(error, null);
           } else {
-            var appInfo = {}
+            var appInfo = {};
             var lines = stdout.split('\n');
 
             for (var i in lines) {
-              var match
+              var match;
               if (match = findKeyValue(lines[i])) {
                 //application-label-ur-PK:'Hello world'
-                appInfo[match[1]] = match[2]
+                appInfo[match[1]] = match[2];
               } else if (match = lines[i].match(/^(\w+[-\w]+):((\s+\w+='[^']*')+)$/)) {
                 //package: name='mingsin.hello' versionCode='1' versionName='1.0' platformBuildVersionName=''
-                var tmp
+                var tmp;
                 if (tmp = match[2].match(/(\w+)='([^'])*'/g)) {
-                  var obj = {}
+                  var obj = {};
                   for (var j in tmp) {
-                    var result = tmp[j].match(/(\w+)='([^']*)'/) // name='mingsin.hello' 
+                    var result = tmp[j].match(/(\w+)='([^']*)'/); // name='mingsin.hello' 
                     if (result) {
-                      obj[result[1]] = result[2]
+                      obj[result[1]] = result[2];
                     }
                   }
 
@@ -71,16 +65,16 @@ module.exports = function (filename, callback) {
                       uses-permission: name='android.permission.CAMERA'
                       uses-permission: name='android.permission.GET_TASKS'
                    */
-                  var currItem = match[1]
-                  var r = appInfo[currItem]
+                  var currItem = match[1];
+                  var r = appInfo[currItem];
                   if (r) {
                     if (r.constructor === Array) {
-                      r.push(obj)
+                      r.push(obj);
                     } else {
-                      appInfo[currItem] = [r, obj]
+                      appInfo[currItem] = [r, obj];
                     }
                   } else {
-                    appInfo[currItem] = obj
+                    appInfo[currItem] = obj;
                   }
                 }
               }
