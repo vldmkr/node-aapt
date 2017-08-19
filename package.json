@@ -5,7 +5,7 @@
   "main": "index.js",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/vldmkr/node-aapt.git"
+    "url": "git+https://github.com/trevorwang/node-aapt.git"
   },
   "keywords": [
     "aapt",
@@ -13,10 +13,10 @@
     "android",
     "parser"
   ],
-  "author": "Vladyslav Makarian",
+  "author": "Trevor Wang",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/vldmkr/node-aapt/issues"
+    "url": "https://github.com/trevorwang/node-aapt/issues"
   },
-  "homepage": "https://github.com/vldmkr/node-aapt#readme"
+  "homepage": "https://github.com/trevorwang/node-aapt#readme"
 }

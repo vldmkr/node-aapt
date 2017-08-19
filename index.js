@@ -86,6 +86,12 @@ function createAppInfo(stdout) {
           appInfo[currItem] = obj;
         }
       }
+    } else if (match = lines[i].match(/^(\w+[-\w]+):((\s+'[^']*')+)$/)) { //densities: '120' '160' '240' '320' '480' '640' '65535'
+      appInfo[match[1]] = match[2].split(' ').map(function (item) {
+        return item.slice(1, -1);
+      }).filter(function (item) {
+        return item !== '';
+      });
     }
   }
   return appInfo;

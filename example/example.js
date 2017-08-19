@@ -1,6 +1,6 @@
 const package = require('../index.js')
 
-package(__dirname + '/wechat.apk', (err, data) => {
+package(__dirname + '/zssq.apk', (err, data) => {
     if (err) {
         // something went wrong 
     } else {
