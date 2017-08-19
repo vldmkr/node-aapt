@@ -1,6 +1,6 @@
-const package = require('../index.js')
+const pkg = require('../index.js')
 
-package(__dirname + '/zssq.apk', (err, data) => {
+pkg(__dirname + '/zssq.apk', (err, data) => {
     if (err) {
         // something went wrong 
     } else {
