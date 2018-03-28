@@ -16,7 +16,7 @@ module.exports = function (filename, callback) {
         reject(err);
         callback(err, null);
       } else {
-        const cmd = [aapt, 'dump', 'badging', filename, '|', 'grep', 'package'].join(' ');
+        const cmd = [aapt, 'dump', 'badging', filename, '|', 'grep', '-E', '"application:|package"'].join(' ');
         exec(cmd, (err, stdout, stderr) => {
           const error = err || stderr;
           if(error) {
@@ -24,10 +24,13 @@ module.exports = function (filename, callback) {
             callback(error, null);
           } else {
             const match = stdout.match(/name='([^']+)'[\s]*versionCode='(\d+)'[\s]*versionName='([^']+)/);
+            const match2 = stdout.match(/label='([^']+)'\s*icon='([^']+)'/);
             const info = {
               packageName : match[1],
               versionCode : match[2],
               versionName : match[3],
+              label : match2[1],
+              icon : match2[2],
             };
             resolve(info);
             callback(null, info);
