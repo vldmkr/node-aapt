@@ -4,9 +4,13 @@ const exec   = require('child_process').exec;
 const path   = require('path');
 const os     = require('os');
 const fs     = require('fs');
+let aapt = 'wtf'
 
-const aapt = path.join(__dirname, 'lib', os.type(), 'aapt');
-
+if (os.type() == "Windows_NT") {
+  aapt = path.join(__dirname, 'lib', os.type(), 'aapt.exe');
+} else {
+  const aapt = path.join(__dirname, 'lib', os.type(), 'aapt');
+}
 module.exports = function (filename, callback) {
   callback = callback || function () {};
   return new Promise(function (resolve, reject) {
@@ -19,6 +23,7 @@ module.exports = function (filename, callback) {
 
         os.type()
         if (`${os.type()}` == "Windows_NT") {
+          console.log("IN NT")
           const cmd = [aapt, 'dump', 'badging', filename].join(' ');
           exec(cmd, (err, stdout, stderr) => {
             const error = err || stderr;
@@ -27,11 +32,11 @@ module.exports = function (filename, callback) {
               callback(error, null);
             } else {
 
-              packageName = packageStuff.match(/name='([a-zA-Z.]*)'/g);
+              let packageName = stdout.match(/name='([a-zA-Z.]*)'/g);
               packageName = packageName[0].split("'")[1]
-              versionCode = packageStuff.match(/versionCode='(\d+)'/g);
+              let versionCode = stdout.match(/versionCode='(\d+)'/g);
               versionCode = versionCode[0].split("'")[1]
-              versionName = packageStuff.match(/versionName='([^']+)/g);
+              let versionName = stdout.match(/versionName='([^']+)/g);
               versionName = versionName[0].split("'")[1]
               const info = {packageName: packageName, versionCode: versionCode, versionName: versionName}
               
@@ -64,4 +69,5 @@ module.exports = function (filename, callback) {
     });
   });
 };
+
 
