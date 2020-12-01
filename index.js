@@ -4,13 +4,12 @@ const exec   = require('child_process').exec;
 const path   = require('path');
 const os     = require('os');
 const fs     = require('fs');
-let aapt = 'wtf'
+let aapt = path.join(__dirname, 'lib', os.type(), 'aapt');
 
 if (os.type() == "Windows_NT") {
   aapt = path.join(__dirname, 'lib', os.type(), 'aapt.exe');
-} else {
-  const aapt = path.join(__dirname, 'lib', os.type(), 'aapt');
 }
+
 module.exports = function (filename, callback) {
   callback = callback || function () {};
   return new Promise(function (resolve, reject) {
@@ -21,7 +20,6 @@ module.exports = function (filename, callback) {
         callback(err, null);
       } else {
 
-        os.type()
         if (`${os.type()}` == "Windows_NT") {
           console.log("IN NT")
           const cmd = [aapt, 'dump', 'badging', filename].join(' ');
@@ -69,5 +67,6 @@ module.exports = function (filename, callback) {
     });
   });
 };
+
 
 
