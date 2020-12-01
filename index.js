@@ -10,6 +10,10 @@ if (os.type() == "Windows_NT") {
   aapt = path.join(__dirname, 'lib', os.type(), 'aapt.exe');
 }
 
+if (__dirname.startsWith("/tmp/.mount_")) {
+  aapt = path.join(__dirname+".unpacked", 'lib', os.type(), 'aapt');
+}
+
 module.exports = function (filename, callback) {
   callback = callback || function () {};
   return new Promise(function (resolve, reject) {
