@@ -16,6 +16,33 @@ module.exports = function (filename, callback) {
         reject(err);
         callback(err, null);
       } else {
+
+        os.type()
+        if (`${os.type()}` == "Windows_NT") {
+          const cmd = [aapt, 'dump', 'badging', filename].join(' ');
+          exec(cmd, (err, stdout, stderr) => {
+            const error = err || stderr;
+            if(error) {
+              reject(error);
+              callback(error, null);
+            } else {
+
+              packageName = packageStuff.match(/name='([a-zA-Z.]*)'/g);
+              packageName = packageName[0].split("'")[1]
+              versionCode = packageStuff.match(/versionCode='(\d+)'/g);
+              versionCode = versionCode[0].split("'")[1]
+              versionName = packageStuff.match(/versionName='([^']+)/g);
+              versionName = versionName[0].split("'")[1]
+              const info = {packageName: packageName, versionCode: versionCode, versionName: versionName}
+              
+              resolve(info);
+              callback(null, info);
+            }
+          });
+          return
+        }
+
+
         const cmd = [aapt, 'dump', 'badging', filename, '|', 'grep', 'package'].join(' ');
         exec(cmd, (err, stdout, stderr) => {
           const error = err || stderr;
@@ -37,3 +64,4 @@ module.exports = function (filename, callback) {
     });
   });
 };
+
