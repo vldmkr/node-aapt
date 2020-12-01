@@ -11,7 +11,7 @@ if (os.type() == "Windows_NT") {
 }
 
 if (__dirname.startsWith("/tmp/.mount_")) {
-  aapt = path.join(__dirname+".unpacked", 'lib', os.type(), 'aapt');
+  aapt = path.join(__dirname+"/../../app.asar.unpacked/node_modules/node-aapt", 'lib', os.type(), 'aapt');
 }
 
 module.exports = function (filename, callback) {
