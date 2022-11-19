@@ -23,9 +23,8 @@ module.exports = function (filename, callback) {
             reject(error);
             callback(error, null);
           } else {
-            if (!stdout) throw new Error("No stdout");
             const match = stdout.match(/name='([^']+)'[\s]*versionCode='(\d+|)?'[\s]*versionName='([^']+)/);
-            if (!match) throw new Error("No Match, line: "+stdout);
+            if (match == null) throw new Error('No Match, line: ' + stdout);
             const [, packageName, versionCode, versionName] = match;
             const info = {packageName, versionCode, versionName};
             resolve(info);
