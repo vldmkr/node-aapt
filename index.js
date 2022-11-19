@@ -23,12 +23,11 @@ module.exports = function (filename, callback) {
             reject(error);
             callback(error, null);
           } else {
-            const match = stdout.match(/name='([^']+)'[\s]*versionCode='(\d+)'[\s]*versionName='([^']+)/);
-            const info = {
-              packageName : match[1],
-              versionCode : match[2],
-              versionName : match[3],
-            };
+            if (!stdout) throw new Error("No stdout");
+            const match = stdout.match(/name='([^']+)'[\s]*versionCode='(\d+|)?'[\s]*versionName='([^']+)/);
+            if (!match) throw new Error("No Match, line: "+stdout);
+            const [, packageName, versionCode, versionName] = match;
+            const info = {packageName, versionCode, versionName};
             resolve(info);
             callback(null, info);
           }
